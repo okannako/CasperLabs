@@ -62,15 +62,12 @@ sudo /etc/casper/delete_local_db.sh; sleep 1
 
 #Portları açın: 35000, 9999, 8888
 
-sudo systemctl start casper-node-launcher
-systemctl status casper-node-launcher
-
 #Key Oluşturma
 sudo chmod -R 777 /etc/casper/validator_keys
 cd /etc/casper/validator_keys
 casper-client keygen #Bu şekilde oluşturduğunuz keyleri https://clarity.casperlabs.io/ buraya accounts bölümüne yükleyip faucet istemelisiniz ya da eski keyinizi kullanmak istiyorsanız 66. satırdaki klasöre dosyaları atmalısınız
-sudo systemctl start casper-node
-systemctl status casper-node #Eğer "Active: active (running)" görünüyorsa 20 dakika bekleyip öyle devam edin. Çökmediğinden emin olmak için bekliyoruz.
+sudo systemctl start casper-node-launcher
+systemctl status casper-node-launcher #Eğer "Active: active (running)" görünüyorsa 20 dakika bekleyip öyle devam edin. Çökmediğinden emin olmak için bekliyoruz.
 
 #Node Kontrol
 wget https://raw.githubusercontent.com/matsuro-hadouken/casper-tools/master/explorer.sh
