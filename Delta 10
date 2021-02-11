@@ -75,7 +75,7 @@ chmod +x explorer.sh
 ./explorer.sh    #Burada çıkan değerlerde ERA ve HEIGH değerleri sistemle eşitlenmeli, 1,5 saat civarı sürebilir.
 
 Bonding
-#Public ve Stake miktarı bölümlerini ayarlayınız.
+#Public key (public_key_hex içindeki) ve Stake miktarı bölümlerini ayarlayınız.
 casper-client put-deploy --chain-name delta-10 --node-address http://127.0.0.1:7777 --secret-key /etc/casper/validator_keys/secret_key.pem --session-path  $HOME/casper-node/target/wasm32-unknown-unknown/release/add_bid.wasm  --payment-amount 1000000000  --session-arg="public_key:public_key='PUBLIC KEYİNİZ'" --session-arg="amount:u512='9000000000000000 (STAKE MİKTARI)'" --session-arg="delegation_rate:u64='10'"
 
 #82. satırdaki kodu girdikten sonra 'deploy_hash' değerini 84. satırdaki kodda yerine girin.
