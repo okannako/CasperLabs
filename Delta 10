@@ -60,7 +60,10 @@ sudo sed -i "/trusted_hash =/c\trusted_hash = '$(curl -s 18.144.176.168:8888/sta
 sudo logrotate -f /etc/logrotate.d/casper-node
 sudo /etc/casper/delete_local_db.sh; sleep 1
 
-#Portları açın: 35000, 9999, 8888
+#Portları açın
+sudo ufw allow 8888
+sudo ufw allow 9999
+sudo ufw allow 35000
 
 #Key Oluşturma
 sudo chmod -R 777 /etc/casper/validator_keys
