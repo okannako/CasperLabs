@@ -77,7 +77,6 @@ cd ~
 cd casper-node
 wget https://raw.githubusercontent.com/matsuro-hadouken/casper-tools/master/explorer.sh
 chmod +x explorer.sh
-cd casper-tools/master/
 ./explorer.sh    #Burada çıkan değerlerde ERA ve HEIGH değerleri sistemle eşitlenmeli, 1,5 saat civarı sürebilir.
 
 Bonding
