@@ -73,8 +73,10 @@ sudo systemctl start casper-node-launcher
 systemctl status casper-node-launcher #Eğer "Active: active (running)" görünüyorsa 20 dakika bekleyip öyle devam edin. Çökmediğinden emin olmak için bekliyoruz.
 
 #Node Kontrol
+cd ~
 wget https://raw.githubusercontent.com/matsuro-hadouken/casper-tools/master/explorer.sh
 chmod +x explorer.sh
+cd casper-tools/master/
 ./explorer.sh    #Burada çıkan değerlerde ERA ve HEIGH değerleri sistemle eşitlenmeli, 1,5 saat civarı sürebilir.
 
 Bonding
