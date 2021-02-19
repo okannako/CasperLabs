@@ -74,6 +74,7 @@ systemctl status casper-node-launcher #Eğer "Active: active (running)" görün�
 
 #Node Kontrol
 cd ~
+cd casper-node
 wget https://raw.githubusercontent.com/matsuro-hadouken/casper-tools/master/explorer.sh
 chmod +x explorer.sh
 cd casper-tools/master/
@@ -89,4 +90,12 @@ casper-client put-deploy --chain-name delta-10 --node-address http://127.0.0.1:7
 casper-client get-deploy deploy_hash | jq .result.execution_results #Kodu girdikten sonra [] böyle bir işaret çıkması gerekiyor. 
 
 #Biraz bekledikten sonra clarity.casperlabs sitesinde validators sekmesinde public key değerinizin olup olmadığını kontrol edin, listedeyseniz işlemler başarılıdır.
+
+#Sistemde Validators olup olmadığınızı günde 1 veya 2 defa şu şekilde kontrol ediniz. Sıralı şekilde birçok yazı gelecektir ve en sonda çıkan genellikle mor cüzdan adreslerinde rengi farklı olarak size ait keyi gösterir.
+
+cd ~
+cd casper-node
+wget https://raw.githubusercontent.com/matsuro-hadouken/casper-tools/master/active_validators.sh
+sudo chmod +x active_validators.sh
+./active_validators.sh
 
