@@ -85,7 +85,7 @@ cd casper-node
 # PUBLIC KEYİNİZ (public_key_hex içindeki) bölümünü silip kendi keyinizi yazın.
 casper-client put-deploy --chain-name delta-10 --node-address http://127.0.0.1:7777 --secret-key /etc/casper/validator_keys/secret_key.pem --session-path  $HOME/casper-node/target/wasm32-unknown-unknown/release/add_bid.wasm  --payment-amount 1000000000  --session-arg="public_key:public_key='PUBLIC KEYİNİZ'" --session-arg="amount:u512='9000000000000000'" --session-arg="delegation_rate:u64='10'"
 
-#82. satırdaki kodu girdikten sonra 'deploy_hash' değerini 84. satırdaki kodda yerine girin.
+#86. satırdaki kodu girdikten sonra 'deploy_hash' değerini 84. satırdaki kodda yerine girin.
 casper-client get-deploy deploy_hash | jq .result.execution_results #Kodu girdikten sonra [] böyle bir işaret çıkması gerekiyor. 
 
 #Biraz bekledikten sonra clarity.casperlabs sitesinde validators sekmesinde public key değerinizin olup olmadığını kontrol edin, listedeyseniz işlemler başarılıdır.
