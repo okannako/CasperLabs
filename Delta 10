@@ -1,6 +1,6 @@
 #NakoTurk
 
-#Kullanıcı Oluşturma
+#Kullanıcı Oluşturma/Create a User
 
 sudo adduser casper
 
@@ -9,12 +9,12 @@ root    ALL=(ALL:ALL) ALL
 casper ALL=(ALL:ALL) ALL #root altına bu satırı ekle
 CTRL+X Y Enter
 
-#Kullanıcıya Yetki Ver
+#Kullanıcıya Yetki Ver/Authorize User
 sudo usermod -a -G sudo casper
 
 sudo su - casper
 
-#Gerekli Güncellemeler
+#Gerekli Güncellemeler/Required Updates
 sudo apt-get update
 
 sudo apt-get -y install cmake
@@ -48,7 +48,7 @@ curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-n
 curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-client_0.7.6-0_amd64.deb
 sudo apt install -y ./casper-client_0.7.6-0_amd64.deb ./casper-node-launcher_0.2.0-0_amd64.deb
 
-cd /etc/casper  #Eğer ilk defa yükleme yapıyorsanız. 110. satırdan başlayıp 118'e kadar yapın ve sonra 64. satırdan devam edin.
+cd /etc/casper  #Eğer ilk defa yükleme yapıyorsanız. 110. satırdan başlayıp 118'e kadar yapın ve sonra 64. satırdan devam edin./If you are installing for the first time. Start at line 110 and do it all the way to 118, and then continue with line 64.
 sudo -u casper ./pull_casper_node_version.sh 1_0_0
 
 #Get trusted_hash into config.toml
@@ -65,7 +65,7 @@ sudo ufw allow 8888
 sudo ufw allow 9999
 sudo ufw allow 35000
 
-#Key Oluşturma
+#Key Oluşturma/Key Generation
 sudo chmod -R 777 /etc/casper/validator_keys
 cd /etc/casper/validator_keys
 casper-client keygen #Bu şekilde oluşturduğunuz keyleri https://clarity.casperlabs.io/ buraya accounts bölümüne yükleyip faucet istemelisiniz ya da eski keyinizi kullanmak istiyorsanız 66. satırdaki klasöre dosyaları atmalısınız
@@ -77,7 +77,7 @@ cd ~
 cd casper-node
 wget https://raw.githubusercontent.com/matsuro-hadouken/casper-tools/master/explorer.sh
 chmod +x explorer.sh
-./explorer.sh    #Burada çıkan değerlerde ERA ve HEIGH değerleri sistemle eşitlenmeli, 1,5 saat civarı sürebilir.
+./explorer.sh    #Burada çıkan değerlerde ERA ve HEIGH değerleri sistemle eşitlenmeli, 1,5 saat civarı sürebilir./ERA and HEIGH values should be synchronized with the system in the values found here, it may take around 1.5 hours.
 
 Bonding
 cd casper-node
@@ -98,7 +98,7 @@ wget https://raw.githubusercontent.com/matsuro-hadouken/casper-tools/master/acti
 sudo chmod +x active_validators.sh
 ./active_validators.sh
 
-#0.7.7 Güncellemesi için aşağıdaki işlemleri sırasıyla yapın. 
+#0.7.7 Güncellemesi için aşağıdaki işlemleri sırasıyla yapın./For Update 0.7.7, follow the steps below in order.
 
 #Bu kodla versiyonu kontrol edin, eğer 0.7.7 değilse diğer işlemleri gerçekleştirin.
 curl -s localhost:8888/status | jq .build_version
