@@ -171,7 +171,7 @@ sudo -u casper /etc/casper/config_from_example.sh 1_0_1
 sudo sed -i "/trusted_hash =/c\trusted_hash = '$(curl -s 18.144.176.168:8888/status | jq -r .last_added_block_info.hash | tr -d '\n')'" /etc/casper/1_0_1/config.toml
 
 cat /etc/casper/1_0_1/chainspec.toml | grep activation_point   #Bu kod yazıldığında 'activation_point = 34' sonucunu vermeli.
-/var/lib/casper/bin/1_0_1/casper-node --version   #Bu kod yazıldığında 'casper-node 0.9.3-897b1b5f'
+/var/lib/casper/bin/1_0_1/casper-node --version   #Bu kod yazıldığında 'casper-node 0.9.3-897b1b5f' sonucunu vermeli.
 
 #1_0_1 Güncellemesi bu kadar#
 
