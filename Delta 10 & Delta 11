@@ -48,7 +48,7 @@ curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-n
 curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-client_0.7.6-0_amd64.deb
 sudo apt install -y ./casper-client_0.7.6-0_amd64.deb ./casper-node-launcher_0.2.0-0_amd64.deb
 
-cd /etc/casper  #Eğer ilk defa yükleme yapıyorsanız. 110. satırdan başlayıp 118'e kadar yapın ve sonra 64. satırdan devam edin./If you are installing for the first time. Start at line 110 and do it all the way to 118, and then continue with line 64.
+cd /etc/casper 
 sudo -u casper ./pull_casper_node_version.sh 1_0_0
 
 #Get trusted_hash into config.toml
