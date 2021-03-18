@@ -187,5 +187,10 @@ sudo /etc/casper/delete_local_db.sh; sleep 1
 sudo systemctl start casper-node-launcher; sleep 2
 systemctl status casper-node-launcher        #Bu işlemler sisteme eşitleme işlemini tekrar başlatacak
 
+#Node Durumuna Bakmak İçin
+
+curl -s localhost:8888/status | jq .last_added_block_info
+
+
 
 
