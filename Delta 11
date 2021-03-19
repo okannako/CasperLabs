@@ -1,0 +1,100 @@
+#NakoTurk
+
+#Kullanıcı Oluşturma/Create a User
+
+sudo adduser casper
+
+sudo visudo
+root    ALL=(ALL:ALL) ALL 
+casper ALL=(ALL:ALL) ALL #root altına bu satırı ekle
+CTRL+X Y Enter
+
+#Kullanıcıya Yetki Ver/Authorize User
+sudo usermod -a -G sudo casper
+
+sudo su - casper
+
+#Gerekli Güncellemeler/Required Updates
+sudo apt-get update
+
+sudo apt-get -y install cmake
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh #enter
+source $HOME/.cargo/env
+
+sudo apt-get install -y libssl-dev
+
+sudo apt-get install -y pkg-config
+
+sudo apt install build-essential
+
+sudo apt install -y git
+
+sudo apt-get install -y jq
+
+sudo apt install gcc g++ pkg-config libssl-dev make wabt jq
+
+
+git clone https://github.com/CasperLabs/casper-node.git
+
+cd casper-node
+
+git fetch
+
+git checkout release-0.9.3
+
+make setup-rs && make build-client-contracts -j
+
+
+#Contract Compilation instructions
+cd ~
+curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-client_0.9.3-0_amd64.deb
+curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-node-launcher_0.3.1-0_amd64.deb
+
+sudo apt install -y ./casper-client_0.9.3-0_amd64.deb ./casper-node-launcher_0.3.1-0_amd64.deb
+
+sudo -u casper /etc/casper/pull_casper_node_version.sh 1_0_0 delta-11
+sudo -u casper /etc/casper/config_from_example.sh 1_0_0
+
+sudo sed -i "/trusted_hash =/c\trusted_hash = '$(curl -s 18.144.176.168:8888/status | jq -r .last_added_block_info.hash | tr -d '\n')'" /etc/casper/1_0_0/config.toml
+
+sudo -u casper /etc/casper/pull_casper_node_version.sh 1_0_1 delta-11
+sudo -u casper /etc/casper/config_from_example.sh 1_0_1
+sudo sed -i "/trusted_hash =/c\trusted_hash = '$(curl -s 18.144.176.168:8888/status | jq -r .last_added_block_info.hash | tr -d '\n')'" /etc/casper/1_0_1/config.toml
+
+cat /etc/casper/1_0_1/chainspec.toml | grep activation_point   #Bu kod yazıldığında 'activation_point = 34' sonucunu vermeli.
+/var/lib/casper/bin/1_0_1/casper-node --version   #Bu kod yazıldığında 'casper-node 0.9.3-897b1b5f' sonucunu vermeli.
+
+#Portları açın (En sağlıklı yöntem partları vpsinizden açmaktır.)
+sudo ufw allow 8888
+sudo ufw allow 9999
+sudo ufw allow 35000
+
+#Key Oluşturma/Key Generation
+sudo chmod -R 777 /etc/casper/validator_keys
+cd /etc/casper/validator_keys
+#Artık kayıtlar bittiği için key oluşturma yok, eski keylerinizi vpsinize winscp ile bağlanarak 75. satırda ki dizine atmanız gerekiyor.
+
+sudo logrotate -f /etc/logrotate.d/casper-node
+sudo systemctl start casper-node-launcher; sleep 2
+systemctl status casper-node-launcher #15 dakika çökmezse devam
+
+#Node Kontrol
+cd ~
+cd casper-node
+wget https://raw.githubusercontent.com/matsuro-hadouken/casper-tools/master/explorer.sh
+chmod +x explorer.sh
+./explorer.sh    #Burada çıkan değerlerde ERA ve HEIGH değerleri sistemle eşitlenmeli
+
+#Bond İşlemi (Bu işlemi yapınca sitede görüneceksiniz ve de Delta 10' de ki gibi active validators koduyla kendinizi kontrol edin.)
+#PUPLIC yazan yeri silip kendi keyinizi yazacaksınız.
+
+casper-client put-deploy --chain-name delta-11 --node-address http://127.0.0.1:7777 --secret-key /etc/casper/validator_keys/secret_key.pem --session-path  $HOME/casper-node/target/wasm32-unknown-unknown/release/add_bid.wasm  --payment-amount 1000000000  --session-arg="public_key:public_key='PUBLIC'" --session-arg="amount:u512='900000000000'" --session-arg="delegation_rate:u8='10'"
+#•157. satırda yapılan işlem sonucundan çıkan deploy_hash kısmının karşısındaki kodu 160. satırda yazan kodda DEPLOY u silerek yerine yapıştırın ve enterlayın sonuç olarak uzun yazılar ya da [] sembolü çıkarması gerekiyor.
+
+casper-client get-deploy DEPLOY | jq .result.execution_results
+
+
+#Node Durumuna Bakmak İçin
+
+curl -s localhost:8888/status | jq .last_added_block_info
