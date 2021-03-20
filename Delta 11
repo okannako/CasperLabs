@@ -94,6 +94,18 @@ casper-client put-deploy --chain-name delta-11 --node-address http://127.0.0.1:7
 
 casper-client get-deploy DEPLOY | jq .result.execution_results
 
+#Güncelleme
+
+sudo systemctl stop casper-node-launcher
+sudo logrotate -f /etc/logrotate.d/casper-node
+sudo -u casper /etc/casper/pull_casper_node_version.sh 1_0_2 delta-11
+sudo -u casper /etc/casper/config_from_example.sh 1_0_2
+sudo -u casper cp /var/lib/casper/bin/1_0_2/casper-node /var/lib/casper/bin/1_0_1
+sudo -u casper sed -i 's/1\.0\.1/1\.0\.2/g' /etc/casper/casper-node-launcher-state.toml
+sudo -u casper sed -i 's/1_0_1/1_0_2/g' /etc/casper/casper-node-launcher-state.toml
+sudo systemctl start casper-node-launcher
+
+#Bu adımları yaptıktan 5 dakika sonra alttaki kod ile kontrol ettiğinizde ERA 50, HEIGHT 16148 değerlerinden başlaması gerekiyor. 
 
 #Node Durumuna Bakmak İçin
 
