@@ -72,7 +72,7 @@ sudo ufw allow 35000
 
 #Key Oluşturma/Key Generation
 sudo chmod -R 777 /etc/casper/validator_keys
-cd /etc/casper/validator_keys
+#/etc/casper/validator_keys
 #Artık kayıtlar bittiği için key oluşturma yok, eski keylerinizi vpsinize winscp ile bağlanarak 75. satırda ki dizine atmanız gerekiyor.
 
 sudo logrotate -f /etc/logrotate.d/casper-node
