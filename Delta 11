@@ -110,3 +110,22 @@ sudo systemctl start casper-node-launcher
 #Node Durumuna Bakmak İçin
 
 curl -s localhost:8888/status | jq .last_added_block_info
+
+
+#Delta-11 Upgrade 1_0_3 ERA 104'den önce yapılmalıdır
+
+sudo rm -rf /etc/casper/1_0_3
+sudo rm -rf /var/lib/casper/bin/1_0_3
+
+Upgrade Procedure
+sudo -u casper /etc/casper/pull_casper_node_version.sh 1_0_3 delta-11
+sudo -u casper /etc/casper/config_from_example.sh 1_0_3
+
+#Birkaç dakika sonra alltaki kod ile kontrol ettiğinizde 128-131 satır aralığında ki gibi bir ekran çıkarmalı:
+curl -s localhost:8888/status | jq .next_upgrade
+
+
+{
+  "activation_point": 104,
+  "protocol_version": "1.0.3"
+}
