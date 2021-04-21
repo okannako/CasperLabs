@@ -1,0 +1,15 @@
+#Ana ağın block değerinden çok fazla geride kaldığınızda bu 5 satır kodla sıfırlayıp tekrar başlatıyor ve ağı yakalamasını sağlıyor. 
+#Tekrar block değeri göstermesi uzun sürüyor bir süre (yarım saat) beklemeniz gerekiyor.
+#(DB silmenin puanlamaya etkisi var mı yok mu bilmiyorum ancak takıldığında ilerlemesi için şu an başka bir yol bulamadım. Risk size ait)
+
+
+#When you're too far behind the block value of the main network, it resets and restarts with 5 lines of code and allows it to capture the network.
+#It takes a long time for the block value to show again, you need to wait a while (half an hour).
+#(I don't know if deleting DB has an effect on scoring, but I couldn't find another way to move forward when it was installed. The Risk is yours)
+
+
+sudo systemctl stop casper-node-launcher.service
+sudo logrotate -f /etc/logrotate.d/casper-node
+sudo /etc/casper/delete_local_db.sh; sleep 1
+sudo systemctl start casper-node-launcher; sleep 2
+systemctl status casper-node-launcher
